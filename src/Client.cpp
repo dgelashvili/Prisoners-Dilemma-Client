@@ -123,8 +123,16 @@ bool Client::authenticationPhase() const {
     return false;
 }
 
+void Client::gamePhase() const {
+    std::string serverMessage = enterCommand();
+    std::cout << receiveFromServer();
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    system("cls");
+}
+
+
 // Handles main menu page and communication
-[[noreturn]] void Client::mainMenuPhase() const {
+void Client::mainMenuPhase() const {
     while(true) {
         //play or exit (P/X):
         std::string serverMessage = enterCommand();
@@ -137,8 +145,10 @@ bool Client::authenticationPhase() const {
             std::this_thread::sleep_for(std::chrono::seconds(2));
             system("cls");
         } else {
-            while (true) {
-
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            system("cls");
+            if (serverMessage != "Matchmaking timeout. Try again.\n") {
+                gamePhase();
             }
         }
     }

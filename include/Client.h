@@ -20,7 +20,8 @@ public:
     void disconnectFromServer() const;
     [[nodiscard]] std::string enterCommand() const;
     [[nodiscard]] bool authenticationPhase() const;
-    [[noreturn]] void mainMenuPhase() const;
+    void gamePhase() const;
+    void mainMenuPhase() const;
 
 private:
     static void initializeWinSock();
