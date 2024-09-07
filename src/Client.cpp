@@ -124,10 +124,22 @@ bool Client::authenticationPhase() const {
 }
 
 void Client::gamePhase() const {
-    std::string serverMessage = enterCommand();
-    std::cout << receiveFromServer();
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    system("cls");
+    while(true) {
+        std::string serverMessage = receiveFromServer();
+        std::cout << serverMessage;
+        if (serverMessage.find("Match is over!") != std::string::npos) {
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+            system("cls");
+            break;
+        }
+        std::string userInput;
+        std::cin >> userInput;
+        sendToServer(userInput);
+        serverMessage = receiveFromServer();
+        std::cout << serverMessage;
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        system("cls");
+    }
 }
 
 
